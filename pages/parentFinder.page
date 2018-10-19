@@ -1,0 +1,62 @@
+<apex:page standardStylesheets="true" showHeader="false" sidebar="false" controller="parent_finder">
+<!-- <apex:stylesheet value="{!$Resource.customCSS}" /> -->
+<style type="text/css">
+        [id*=form] {
+					text-align: center;
+					margin: auto;
+				}
+    </style>
+<h1>Parent Finder</h1>
+	<apex:form styleClass="form" id="form">
+
+		<apex:outputPanel rendered="{!state='start'}">
+			<header>Find New Parents!</header>
+			<apex:commandButton reRender="form" value="Parent" action="{!new_parent}" />
+			<apex:commandButton reRender="form" value="Child" action="{!new_child}" />
+			<apex:outputLink value="{!$Page.viewParents}" id="link">View Parents</apex:outputLink>
+		</apex:outputPanel>
+
+		<apex:outputPanel rendered="{!state='parent'}">
+			<apex:pageBlock title="Parent's Details">
+			<apex:pageBlockSection columns="2">
+				<apex:inputField label="Name:" value="{!parent.name}"/>
+				<apex:inputField label="Bedtime:" value="{!parent.Bedtime__c}"/>
+				<apex:inputField label="Candy:" value="{!parent.Candy__c}"/>
+				<apex:inputField label="Dedicated Room:" value="{!parent.Dedicated_Room__c}"/>
+				<apex:inputField label="Siblings:" value="{!parent.Siblings__c}"/>
+				<apex:inputField label="Video Games:" value="{!parent.Video_Games__c}"/>
+				<apex:inputField label="Email:" value="{!parent.Email__c}"/>
+				<apex:inputField label="Password:" value="{!parent.Password__c}"/>
+			</apex:pageBlockSection>
+				<apex:commandButton value="Save" action="{!insertFormParent}" />
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+		<apex:outputPanel rendered="{!state='child'}">
+			<apex:pageBlock title="Child's Details">
+			<apex:pageBlockSection columns="2">
+				<apex:inputField label="Name:" value="{!child.name}"/>
+				<apex:inputField label="Bedtime:" value="{!child.Bedtime__c}"/>
+				<apex:inputField label="Candy:" value="{!child.Candy__c}"/>
+				<apex:inputField label="Dedicated Room:" value="{!child.Dedicated_Room__c}"/>
+				<apex:inputField label="Siblings:" value="{!child.Siblings__c}"/>
+				<apex:inputField label="Video Games:" value="{!child.Video_Games__c}"/>
+				<apex:inputField label="Age:" value="{!child.Age__c}"/>
+				<apex:inputField label="Hair Color:" value="{!child.Hair_Color__c}"/>
+				<apex:inputField label="Email:" value="{!child.Email__c}"/>
+				<apex:inputField label="Password:" value="{!child.Password__c}"/>
+			</apex:pageBlockSection>
+				<apex:commandButton value="Save" action="{!insertFormChild}" />
+			</apex:pageBlock>
+		</apex:outputPanel>
+
+		<apex:outputPanel rendered="{!state='parentFinished'}">
+			<h3>Thanks {!parent.name} for submitting your info!</h3>
+		</apex:outputPanel>
+
+		<apex:outputPanel rendered="{!state='childFinished'}">
+			<h3>Thanks {!if(parent.name = null, child.name, parent.name)} for submitting your info!</h3>
+		</apex:outputPanel>
+
+	</apex:form>
+</apex:page>

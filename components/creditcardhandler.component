@@ -1,0 +1,34 @@
+<apex:component controller="AuthorizeDotNet" allowDML="true">
+  <apex:attribute name="recordId" type="String" description="record id" required="true" />
+  <apex:attribute name="productDescription" type="String" description="Description Here..." required="true" />
+  <apex:outputPanel >
+    <apex:pageBlock title="Please Enter Your Details">
+    <apex:pageBlockSection columns="2">
+    <apex:inputHidden value="{!record_id}" id="recordInput" />
+    <apex:inputHidden value="{!description}" id="descriptionInput" />
+    <script>
+      document.getElementById('{!$Component.recordInput}').value = "{!recordId}";
+      document.getElementById('{!$Component.descriptionInput}').value = "{!productDescription}";
+    </script>
+
+      <apex:input label="First Name:" value="{!first_name}"/>
+      <apex:input label="Last Name:" value="{!last_name}"/>
+      <apex:input label="Email:" value="{!email}"/>
+      <apex:input label="Street:" value="{!street}"/>
+      <apex:input label="Zip Code:" value="{!zipcode}"/>
+      <apex:input label="Credit Card #:" type="number" value="{!cc_number}"/>
+      <apex:selectList size="1" label="Expiration Year:" value="{!exp_year}">
+        <apex:selectOptions value="{!expYearOptions}" />
+      </apex:selectList>
+      <apex:selectList size="1" label="Expiration Month:" value="{!exp_month}">
+        <apex:selectOptions value="{!expMonthOptions}" />
+      </apex:selectList>
+      <apex:input label="CCV #:" type="number" value="{!ccv}"/>
+    </apex:pageBlockSection>
+      <apex:commandButton value="Charge Card" reRender="response" action="{!processPayment}" />
+    </apex:pageBlock>
+  </apex:outputPanel>
+  <apex:outputPanel id="response" >
+    <apex:outputText value="{!authResponse}" rendered="{!!ISBLANK(authResponse)}" />
+  </apex:outputPanel>
+</apex:component>

@@ -1,0 +1,38 @@
+<apex:page doctype="html-5.0" showHeader="false" sidebar="false" controller="view_parents" standardStylesheets="true">
+    <apex:form >
+    <apex:outputPanel rendered="{!child = null}">
+     <label>Email</label><apex:input type="email" value="{!email}" />
+     <label>Password</label><apex:inputSecret value="{!password}"/>
+     <apex:commandButton value="Login" action="{!login}" />
+    </apex:outputPanel>
+    <apex:outputText value="{!error}" rendered="{!error != null}" />
+
+    <apex:outputPanel rendered="{!parents != null && parents.size > 0}">
+
+      <!-- <apex:actionFunction name="filter" action="{!filter}" /> -->
+      <!-- <apex:selectList size="1" onChange="filter()" value="{!filterTime}"> -->
+
+
+      <apex:selectList size="1" value="{!filterTime}">
+        <apex:actionSupport event="onchange" action="{!filter}" />
+          <apex:selectOptions value="{!BedTimeHours}"/>
+      </apex:selectList>
+      <apex:pageBlock title="Parents">
+        <apex:pageBlockTable value="{!parents}" var="parent">
+            <apex:column value="{!parent.name}"/>
+            <apex:column value="{!parent.Bedtime__c}"/>
+            <apex:column value="{!parent.Candy__c}"/>
+            <apex:column value="{!parent.Siblings__c}"/>
+            <apex:column value="{!parent.Video_Games__c}"/>
+            <apex:column value="{!parent.dedicated_room__c }"/>
+        </apex:pageBlockTable>
+    </apex:pageBlock>
+    <apex:commandButton value="Sign Up" action="{!signUp}" />
+    </apex:outputPanel>
+
+    <apex:outputPanel id="payment" >
+      <c:creditcardhandler productDescription="Paid" recordId="{!child.id}" rendered="{!acceptPayments}" />
+    </apex:outputPanel>
+  </apex:form>
+
+</apex:page>
